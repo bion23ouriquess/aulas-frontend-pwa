@@ -7,9 +7,9 @@ import Rodape from './comum/componentes/Rodape/Rodape'
 function App() {
   return (
     <>
-    <Cabecalho/>
-    <Principal/>
-    <Rodape/>
+    <Cabecalho />
+    <Principal />
+    <Rodape />
     </>
   );
 }

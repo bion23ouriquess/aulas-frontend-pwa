@@ -1,4 +1,7 @@
 .rodape_root{
     height: 48px;
     background-color: var(--cor-primaria-escura);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
