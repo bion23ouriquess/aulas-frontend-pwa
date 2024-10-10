@@ -9,7 +9,7 @@ const ListaProdutos = () => {
             cores: ['#29d8d5', '#252a34', '#fc3766'],
         },
         {
-            nome: 'Ar condicionado Xiaomi',
+            nome: 'Xiaomi PocoPhone',
             preco: 5789,
             cores: ['#29d8d5', '#252a34', '#fc3766', '#f95786', '#365069'],
         },
