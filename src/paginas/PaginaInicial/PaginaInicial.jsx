@@ -13,8 +13,8 @@ const PaginaInicial = () => {
                 Lista Produtos
             </BotaoCustomizado>
 
-            <BotaoCustomizado cor="secundaria" aoClicar={() => alert("Clicou no botão")}>
-                Botão Secundário
+            <BotaoCustomizado cor="secundaria" aoClicar={() => navigate("/botao-contador")}>
+                Botão Contador
             </BotaoCustomizado>
 
             <BotaoCustomizado cor="padrao" aoClicar={() => alert("Clicou no botão")}>
