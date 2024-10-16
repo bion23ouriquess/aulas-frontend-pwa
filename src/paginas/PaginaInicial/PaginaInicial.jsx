@@ -13,12 +13,12 @@ const PaginaInicial = () => {
                 Lista Produtos
             </BotaoCustomizado>
 
-            <BotaoCustomizado cor="secundaria" aoClicar={() => navigate("/botao-contador")}>
+            <BotaoCustomizado cor="secundaria" aoClicar={() => navigate('/botao-contador')}>
                 Botão Contador
             </BotaoCustomizado>
 
-            <BotaoCustomizado cor="padrao" aoClicar={() => alert("Clicou no botão")}>
-                Botão Padrão
+            <BotaoCustomizado cor="padrao" aoClicar={() => navigate('/lista-tarefas')}>
+                Lista de Tarefas
             </BotaoCustomizado>
         </Principal>
     )
