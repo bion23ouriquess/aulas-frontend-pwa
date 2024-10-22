@@ -20,6 +20,9 @@ const PaginaInicial = () => {
             <BotaoCustomizado cor="padrao" aoClicar={() => navigate('/lista-tarefas')}>
                 Lista de Tarefas
             </BotaoCustomizado>
+            <BotaoCustomizado cor="padrao" aoClicar={() => navigate('/desafio-componentes')}>
+                Desafio Componentes
+            </BotaoCustomizado>
         </Principal>
     )
 };
