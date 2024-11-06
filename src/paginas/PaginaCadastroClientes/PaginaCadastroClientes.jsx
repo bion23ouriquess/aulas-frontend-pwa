@@ -1,15 +1,17 @@
 import "./PaginaCadastroClientes.css";
 import Principal from "../../comum/componentes/Principal/Principal";
 import BotaoCustomizado from "../../comum/componentes/BotaoCustomizado/BotaoCustomizado";
-import { useState } from "react";
-import ServicoCliente from "../../comum/servicos/servicoCliente";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import ServicoCliente from "../../comum/servicos/ServicoCliente";
+import { useNavigate, useParams } from "react-router-dom";
+import { MASCARA_CELULAR, MASCARA_CPF } from "../../comum/utils/mascaras";
+import { formatarComMascara } from "../../comum/utils/mascaras";
+
+const instanciaServicoCliente = new ServicoCliente();
 
 const PaginaCadastroClientes = () => {
-
- 
-
   const navigate = useNavigate();
+  const params = useParams();
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -17,18 +19,51 @@ const PaginaCadastroClientes = () => {
   const [dataNascimento, setDataNascimento] = useState("");
   const [cpf, setCpf] = useState("");
 
+  useEffect(() => {
+    if (params.id) {
+      const clienteEncontrado = instanciaServicoCliente.buscarPorId(params.id);
+      if (clienteEncontrado) {
+        setNome(clienteEncontrado.nome);
+        setEmail(clienteEncontrado.email);
+        setCelular(clienteEncontrado.celular);
+        setDataNascimento(clienteEncontrado.dataNascimento);
+        setCpf(clienteEncontrado.cpf);
+      }
+    }
+  }, [params.id]);
+
   const servicoCliente = new ServicoCliente();
 
   const salvar = () => {
-    const novoCliente = { nome, email, celular, dataNascimento, cpf };
-    console.log("Novo Cliente: ", novoCliente);
+    const cliente = {
+      id: params.id ? +params.id : Date.now(),
+      nome,
+      email,
+      celular,
+      dataNascimento,
+      cpf,
+    };
+    if (params.id) {
+      instanciaServicoCliente.editarCliente(cliente);
+    } else {
+      instanciaServicoCliente.cadastrarCliente(cliente);
+    }
 
-    servicoCliente.salvar(novoCliente);
+    servicoCliente.cadastrarCliente(cliente);
     navigate("/lista-clientes");
   };
 
   return (
-    <Principal titulo={"Novo Cliente"} voltarPara={"/lista-clientes"}>
+    <Principal
+      titulo={params.id ? "Editar Cliente" : "Novo Cliente"}
+      voltarPara={"/lista-clientes"}
+    >
+      {params.id && (
+        <div className="campo">
+          <label>Id: </label>
+          <input type="text" value={params.id} disabled />
+        </div>
+      )}
       <div className="campo">
         <label>Nome</label>
         <input
@@ -53,7 +88,9 @@ const PaginaCadastroClientes = () => {
           type="tel"
           placeholder="Digite seu N° de celular"
           value={celular} //chama a variavel que está no useState
-          onChange={(event) => setCelular(event.target.value)} //evento criado para poder alterar a variável celular
+          onChange={(event) =>
+            setCelular(formatarComMascara(event.target.value, MASCARA_CELULAR))
+          } //evento criado para poder alterar a variável celular
         />
       </div>
       <div className="campo">
@@ -71,7 +108,9 @@ const PaginaCadastroClientes = () => {
           type="tel"
           placeholder="Digite seu CPF"
           value={cpf}
-          onChange={(event) => setCpf(event.target.value)}
+          onChange={(event) =>
+            setCpf(formatarComMascara(event.target.value, MASCARA_CPF))
+          }
         />
       </div>
 

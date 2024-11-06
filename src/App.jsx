@@ -40,7 +40,7 @@ const router = createBrowserRouter ([
     element: <PaginaListaClientes />
   },
   {
-    path: 'cadastro-cliente',
+    path: 'cadastro-cliente/:id?',
     element: <PaginaCadastroClientes />
   },
 ]);
