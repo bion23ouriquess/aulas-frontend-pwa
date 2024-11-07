@@ -6,6 +6,7 @@ import ServicoCliente from "../../comum/servicos/ServicoCliente";
 import { useNavigate, useParams } from "react-router-dom";
 import { MASCARA_CELULAR, MASCARA_CPF } from "../../comum/utils/mascaras";
 import { formatarComMascara } from "../../comum/utils/mascaras";
+import { toast } from "react-toastify";
 
 const instanciaServicoCliente = new ServicoCliente();
 
@@ -35,8 +36,13 @@ const PaginaCadastroClientes = () => {
   const servicoCliente = new ServicoCliente();
 
   const salvar = () => {
+    if (!nome || !email) {
+      toast.error("Preencha todos os campos obrigatórios!");//se os campos não estiverem completos, não irá salvar
+      return;
+    }
+
     const cliente = {
-      id: params.id ? +params.id : Date.now(),
+      id: params.id ? +params.id : Date.now(),//se for editar o cliente puxa pelo id e salva, se não tiver cadastro irá salvar um novo cliente com um novo id
       nome,
       email,
       celular,
@@ -49,7 +55,6 @@ const PaginaCadastroClientes = () => {
       instanciaServicoCliente.cadastrarCliente(cliente);
     }
 
-    servicoCliente.cadastrarCliente(cliente);
     navigate("/lista-clientes");
   };
 

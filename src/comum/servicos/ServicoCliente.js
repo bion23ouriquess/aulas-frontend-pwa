@@ -28,6 +28,19 @@ class ServicoCliente {
     const clientesDoLocalStorage = this.listar();
     return clientesDoLocalStorage.find((c) => c.id === +idCliente); //retorna o primeiro registro que encontrar
   }
+
+  excluirCliente(idCliente) {
+    const clientesDoLocalStorage = this.listar();
+
+    const listaAtualizada = clientesDoLocalStorage.filter((c) => {
+      return c.id !== idCliente;
+    });
+    localStorage.setItem(
+      "lista-clientes",
+      JSON.stringify(listaAtualizada)
+    );
+    return listaAtualizada;
+  }
 }
 
 export default ServicoCliente;
