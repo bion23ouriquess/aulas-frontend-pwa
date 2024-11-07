@@ -33,8 +33,6 @@ const PaginaCadastroClientes = () => {
     }
   }, [params.id]);
 
-  const servicoCliente = new ServicoCliente();
-
   const salvar = () => {
     if (!nome || !email) {
       toast.error("Preencha todos os campos obrigatórios!");//se os campos não estiverem completos, não irá salvar
