@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Cabecalho from "./comum/componentes/Cabecalho/Cabecalho";
-import Rodape from "./comum/componentes/Rodape/Rodape";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
@@ -15,6 +13,7 @@ import PaginaCadastroClientes from "./paginas/PaginaCadastroClientes/PaginaCadas
 import PaginaNovoUsuario from "./paginas/PaginaNovoUsuario/PaginaNovoUsuario";
 import PaginaLogin from "./paginas/PaginaLogin/PaginaLogin";
 import VerificarAutenticacao from "./comum/componentes/VerificarAutenticacao/VerificarAutenticacao";
+import PaginaMeuPerfil from "./paginas/PaginaMeuPerfil/PaginaMeuPerfil"; 
 
 const router = createBrowserRouter([
   {
@@ -57,6 +56,10 @@ const router = createBrowserRouter([
         path: "cadastro-cliente/:id?",
         element: <PaginaCadastroClientes />,
       },
+      {
+        path: "meu-perfil",
+        element: <PaginaMeuPerfil />,
+      },
     ],
   },
 ]);
@@ -64,9 +67,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <Cabecalho />
       <RouterProvider router={router} />
-      <Rodape />
       <ToastContainer />
     </>
   );

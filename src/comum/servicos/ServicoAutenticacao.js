@@ -16,13 +16,16 @@ class ServicoAutenticacao {
     }
   }
 
-  usuarioEstaLogado() {
+  buscarUsuarioLogado() {
     const usuarioLogado = localStorage.getItem("usuario-logado");
-    if (usuarioLogado) {
-      return true;
-    } else {
-      return false;
+    if(usuarioLogado){
+      return JSON.parse(usuarioLogado);
     }
+    return undefined;
+  }
+
+  sair(){
+    localStorage.removeItem('usuario-logado')
   }
 }
 
