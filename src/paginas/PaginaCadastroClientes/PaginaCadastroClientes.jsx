@@ -4,9 +4,14 @@ import BotaoCustomizado from "../../comum/componentes/BotaoCustomizado/BotaoCust
 import { useEffect, useState } from "react";
 import ServicoCliente from "../../comum/servicos/ServicoCliente";
 import { useNavigate, useParams } from "react-router-dom";
-import { MASCARA_CELULAR, MASCARA_CPF } from "../../comum/utils/mascaras";
-import { formatarComMascara } from "../../comum/utils/mascaras";
+import {
+  formatarComMascara,
+  MASCARA_CEP,
+  MASCARA_CELULAR,
+  MASCARA_CPF,
+} from "../../comum/utils/mascaras";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const instanciaServicoCliente = new ServicoCliente();
 
@@ -19,6 +24,12 @@ const PaginaCadastroClientes = () => {
   const [celular, setCelular] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [cpf, setCpf] = useState("");
+
+  const [cep, setCep] = useState("");
+  const [rua, setRua] = useState("");
+  const [numero, setNumero] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [cidade, setCidade] = useState("");
 
   useEffect(() => {
     if (params.id) {
@@ -35,12 +46,11 @@ const PaginaCadastroClientes = () => {
 
   const salvar = () => {
     if (!nome || !email) {
-      toast.error("Preencha todos os campos obrigatórios!");//se os campos não estiverem completos, não irá salvar
+      toast.error("Preencha todos os campos obrigatórios!"); //se os campos não estiverem completos, não irá salvar
       return;
     }
-
     const cliente = {
-      id: params.id ? +params.id : Date.now(),//se for editar o cliente puxa pelo id e salva, se não tiver cadastro irá salvar um novo cliente com um novo id
+      id: params.id ? +params.id : Date.now(), //se for editar o cliente puxa pelo id e salva, se não tiver cadastro irá salvar um novo cliente com um novo id
       nome,
       email,
       celular,
@@ -56,6 +66,24 @@ const PaginaCadastroClientes = () => {
     navigate("/lista-clientes");
   };
 
+  const buscarCEP = async (event) => {
+    try {
+      const resp = await axios.get(
+        `https://brasilapi.com.br/api/cep/v2/${event.target.value}`
+      );
+
+      setRua(resp.data.street || "");
+      setBairro(resp.data.neighborhood || "");
+      setCidade(resp.data.city || "");
+
+      if (resp.data.street) {
+        document.getElementById("campoNumero").focus();
+      }
+    } catch {
+      toast.error("CEP não encontrado.");
+    }
+  };
+
   return (
     <Principal
       titulo={params.id ? "Editar Cliente" : "Novo Cliente"}
@@ -67,44 +95,49 @@ const PaginaCadastroClientes = () => {
           <input type="text" value={params.id} disabled />
         </div>
       )}
+
       <div className="campo">
         <label>Nome</label>
         <input
           type="text"
-          placeholder="Digite seu nome"
+          placeholder="Digite seu Nome"
           value={nome}
           onChange={(event) => setNome(event.target.value)}
         />
       </div>
+
       <div className="campo">
         <label>E-mail</label>
         <input
           type="email"
-          placeholder="Digite seu e-mail"
+          placeholder="Digite seu E-mail"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
       </div>
+
       <div className="campo">
         <label>Celular</label>
         <input
           type="tel"
-          placeholder="Digite seu N° de celular"
+          placeholder="Digite seu N° de Celular"
           value={celular} //chama a variavel que está no useState
           onChange={(event) =>
             setCelular(formatarComMascara(event.target.value, MASCARA_CELULAR))
-          } //evento criado para poder alterar a variável celular
+          } /*evento criado para poder alterar a variável celular*/
         />
       </div>
+
       <div className="campo">
         <label>Data de Nascimento</label>
         <input
           type="date"
-          placeholder="Digite sua data de nascimento"
+          placeholder="Digite sua Data de Nascimento"
           value={dataNascimento}
           onChange={(event) => setDataNascimento(event.target.value)}
         />
       </div>
+
       <div className="campo">
         <label>CPF</label>
         <input
@@ -114,6 +147,64 @@ const PaginaCadastroClientes = () => {
           onChange={(event) =>
             setCpf(formatarComMascara(event.target.value, MASCARA_CPF))
           }
+        />
+      </div>
+
+      <br />
+      <hr />
+      <br />
+
+      <div className="campo">
+        <label>CEP</label>
+        <input
+          type="tel"
+          placeholder="Digite seu CEP"
+          value={cep}
+          onChange={(event) =>
+            setCep(formatarComMascara(event.target.value, MASCARA_CEP))
+          }
+          onBlur={buscarCEP}
+        />
+      </div>
+      <div className="campo">
+        <label>Rua</label>
+        <input
+          type="text"
+          placeholder="Digite sua Rua"
+          value={rua}
+          onChange={(event) => setRua(event.target.value)}
+          maxLength={100}
+        />
+      </div>
+      <div className="campo">
+        <label>Número</label>
+        <input
+          id="campoNumero"
+          type="text"
+          placeholder="Digite o Número"
+          value={numero}
+          onChange={(event) => setNumero(event.target.value)}
+          maxLength={100}
+        />
+      </div>
+      <div className="campo">
+        <label>Bairro</label>
+        <input
+          type="text"
+          placeholder="Digite seu Bairro"
+          value={bairro}
+          onChange={(event) => setBairro(event.target.value)}
+          maxLength={100}
+        />
+      </div>
+      <div className="campo">
+        <label>Cidade</label>
+        <input
+          type="text"
+          placeholder="Digite sua Cidade"
+          value={cidade}
+          onChange={(event) => setCidade(event.target.value)}
+          maxLength={100}
         />
       </div>
 

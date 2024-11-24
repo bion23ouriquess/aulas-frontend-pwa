@@ -8,36 +8,21 @@ const PaginaInicial = () => {
 
   return (
     <Principal titulo={"Página Inicial"}>
-      <BotaoCustomizado
-        cor="primaria"
-        aoClicar={() => navigate("/lista-produtos")}
-      >
+      <BotaoCustomizado cor="primaria" aoClicar={() => navigate("/lista-produtos")}>
         Lista Produtos
       </BotaoCustomizado>
 
-      <BotaoCustomizado
-        cor="secundaria"
-        aoClicar={() => navigate("/botao-contador")}
-      >
+      <BotaoCustomizado cor="secundaria" aoClicar={() => navigate("/botao-contador")}>
         Botão Contador
       </BotaoCustomizado>
 
-      <BotaoCustomizado
-        cor="padrao"
-        aoClicar={() => navigate("/lista-tarefas")}
-      >
+      <BotaoCustomizado cor="padrao" aoClicar={() => navigate("/lista-tarefas")}>
         Lista de Tarefas
       </BotaoCustomizado>
-      <BotaoCustomizado
-        cor="padrao"
-        aoClicar={() => navigate("/desafio-componentes")}
-      >
+      <BotaoCustomizado cor="padrao" aoClicar={() => navigate("/desafio-componentes")}>
         Desafio Componentes
       </BotaoCustomizado>
-      <BotaoCustomizado
-        cor="primaria"
-        aoClicar={() => navigate("/lista-clientes")}
-      >
+      <BotaoCustomizado cor="primaria" aoClicar={() => navigate("/lista-clientes")}>
         Lista de Clientes
       </BotaoCustomizado>
     </Principal>

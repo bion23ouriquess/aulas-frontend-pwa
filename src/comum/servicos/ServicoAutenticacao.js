@@ -7,13 +7,13 @@ class ServicoAutenticacao {
     const usuariosDoLocalStorage = instanciaServicoUsuarios.listar();
 
     const usuarioLogado = usuariosDoLocalStorage.find(
-      (u) => email === email && u.senha === senha
+      (u) => u.email === email && u.senha === senha
     ); //verificar se os emails e senhas são iguais
 
     if (usuarioLogado) {
       localStorage.setItem("usuario-logado", JSON.stringify(usuarioLogado));
-      return usuarioLogado;
     }
+    return usuarioLogado;
   }
 
   buscarUsuarioLogado() {
