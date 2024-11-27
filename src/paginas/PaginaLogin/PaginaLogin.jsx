@@ -13,19 +13,18 @@ const PaginaLogin = () => {
 
   const navigate = useNavigate();
 
-  const entrar = () => {
-    if (!email || !senha) {
-      toast.error("Preencha todos os campos!");
-      return;
-    }
+  const entrar = async () => {
+    try {
+      if (!email || !senha) {
+        toast.error("Preencha todos os campos!");
+        return;
+      }
 
-    const usuarioLogado = instanciaServicoAutenticacao.login(email, senha);
-    if(usuarioLogado){
-        navigate('/')
-    } else {
-        toast.error('Usuário ou senha inválida.')
+      await instanciaServicoAutenticacao.login(email, senha);
+      navigate("/");
+    } catch (error) {
+      toast.error(error.response.data)
     }
-
   };
 
   return (
@@ -51,7 +50,7 @@ const PaginaLogin = () => {
       <BotaoCustomizado cor={"secundaria"} aoClicar={entrar}>
         Entrar
       </BotaoCustomizado>
-      <Link to='/novo-usuario'>Ainda não possui conta?</Link>
+      <Link to="/novo-usuario">Ainda não possui conta?</Link>
     </Principal>
   );
 };

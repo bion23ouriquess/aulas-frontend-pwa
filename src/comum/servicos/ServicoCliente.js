@@ -1,10 +1,8 @@
+import instanciaApi from "./Api";
+
 class ServicoCliente {
   listar() {
-    const clientesDoLocalStorage = localStorage.getItem("lista-clientes");
-    if (clientesDoLocalStorage) {
-      return JSON.parse(clientesDoLocalStorage);
-    }
-    return [];
+    return instanciaApi.get('/usuarios');
   }
 
   cadastrarCliente(novoCliente) {

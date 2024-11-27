@@ -13,8 +13,11 @@ const PaginaListaClientes = () => {
   const [listaClientes, setListaClientes] = useState([]);
 
   useEffect(() => {
-    const clientesDoLocalStorage = instanciaServicoCliente.listar();
-    setListaClientes(clientesDoLocalStorage);
+    const buscarClientes = async () => {
+      const response = instanciaServicoCliente.listar();
+      setListaClientes(response.data);
+    };
+    buscarClientes();
   }, []);
 
   const navegarParaEdicao = (idCliente) => {
@@ -22,7 +25,7 @@ const PaginaListaClientes = () => {
   };
 
   const excluir = (idCliente) => {
-    if(confirm('Tem certeza?')){
+    if (confirm("Tem certeza?")) {
       const listaAtualizada = instanciaServicoCliente.excluirCliente(idCliente);
       setListaClientes(listaAtualizada);
     }
@@ -42,7 +45,11 @@ const PaginaListaClientes = () => {
                 color="black"
                 onClick={() => navegarParaEdicao(cliente.id)}
               />
-              <FaTrashCan color="red" size={24} onClick={() => excluir(cliente.id)}/>
+              <FaTrashCan
+                color="red"
+                size={24}
+                onClick={() => excluir(cliente.id)}
+              />
             </div>
           </div>
         );

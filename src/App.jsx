@@ -26,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: "",
-    element: <VerificarAutenticacao />,
+    element: <VerificarAutenticacao />, //rotas privadas do app
     children: [
       {
         path: "",
